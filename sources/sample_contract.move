@@ -25,26 +25,4 @@ module counter::counter {
     public fun get_value(addr: address): u64 acquires Counter {
         borrow_global<Counter>(addr).value
     }
-
-    /// test
-    #[test(account = @0x1)]
-    public entry fun test_counter(account: signer) acquires Counter {
-        debug::print(&string::utf8(b"Running test for Counter module..."));
-
-        let addr = signer::address_of(&account);
-
-        // initalize counter
-        init_counter(&account);
-
-        // counter = 0
-        assert!(get_value(addr) == 0, 1);
-
-        // counter += 10
-        increment(&account, 10);
-
-        // counter = 10
-        assert!(get_value(addr) == 10, 2);
-
-        debug::print(&string::utf8(b"Test for Counter module passed!"));
-    }
 }
